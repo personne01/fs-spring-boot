@@ -8,7 +8,6 @@ package co.id.mii.serverside.service;
 import co.id.mii.serverside.model.Region;
 import co.id.mii.serverside.repository.RegionRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -46,17 +45,16 @@ public class RegionService {
         return regionRepository.save(region);
     }
 
-    public Region update(Long id, Region region){
+    public Region update(Long id, Region region) {
         getById(id);
         region.setId(id);
         return regionRepository.save(region);
     }
 
-    public Region delete(Long id){
+    public Region delete(Long id) {
         Region region = getById(id);
         regionRepository.delete(region);
         return region;
     }
-    
-    
+   
 }
