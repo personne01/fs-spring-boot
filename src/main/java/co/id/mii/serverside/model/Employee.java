@@ -10,7 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -18,37 +19,33 @@ import javax.persistence.Table;
  * @author MSI-JO
  */
 @Entity
-@Table(name = "tb_country")
-public class Country {
+@Table(name = "tb_employee")
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 2)
-    private String code;
-
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    private Region region;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    public Country() {
+    private int number;
+    
+    @OneToOne(mappedBy = "employee")
+    @PrimaryKeyJoinColumn
+    private User user;
+
+    public Employee() {
     }
 
-    public Country(Long id, String code, String name) {
+    public Employee(Long id, String name, String email, int number) {
         this.id = id;
-        this.code = code;
         this.name = name;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
+        this.email = email;
+        this.number = number;
     }
 
     public Long getId() {
@@ -59,20 +56,28 @@ public class Country {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
 }
