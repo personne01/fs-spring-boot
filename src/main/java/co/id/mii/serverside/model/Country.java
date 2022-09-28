@@ -6,14 +6,12 @@
 package co.id.mii.serverside.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,26 +19,37 @@ import javax.persistence.Table;
  * @author MSI-JO
  */
 @Entity
-@Table(name = "tb_region")
-public class Region {
+@Table(name = "tb_country")
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 2)
+    private String code;
+
     @Column(nullable = false)
     private String name;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-    private List<Country> countries;
+    @ManyToOne
+    private Region region;
 
-    public Region() {
+    public Country() {
     }
 
-    public Region(Long id, String name) {
+    public Country(Long id, String code, String name) {
         this.id = id;
+        this.code = code;
         this.name = name;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public Long getId() {
@@ -51,20 +60,20 @@ public class Region {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Country> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
     }
 
 }

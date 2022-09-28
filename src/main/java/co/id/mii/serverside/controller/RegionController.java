@@ -7,11 +7,10 @@ package co.id.mii.serverside.controller;
 
 import co.id.mii.serverside.model.Region;
 import co.id.mii.serverside.service.RegionService;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,27 +36,27 @@ public class RegionController {
     }
 
     @GetMapping
-    public List<Region> getAll() {
-        return regionService.getAll();
+    public ResponseEntity<List<Region>> getAll() {
+        return new ResponseEntity(regionService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}") 
-    public Region getById(@PathVariable Long id) {
-        return regionService.getById(id);
+    public ResponseEntity<Region> getById(@PathVariable Long id) {
+        return new ResponseEntity(regionService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public Region create(@RequestBody Region region) {
-        return regionService.create(region);
+    public ResponseEntity<Region> create(@RequestBody Region region) {
+        return new ResponseEntity(regionService.create(region), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Region update(@PathVariable Long id, @RequestBody Region region) {
-        return regionService.update(id, region);
+    public ResponseEntity<Region> update(@PathVariable Long id, @RequestBody Region region) {
+        return new ResponseEntity(regionService.update(id, region), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public Region delete(@PathVariable Long id) {
-        return regionService.delete(id);
+    public ResponseEntity<Region> delete(@PathVariable Long id) {
+        return new ResponseEntity(regionService.delete(id), HttpStatus.OK);
     }
 }
