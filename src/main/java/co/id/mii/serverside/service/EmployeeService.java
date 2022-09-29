@@ -7,6 +7,8 @@ package co.id.mii.serverside.service;
 
 import co.id.mii.serverside.model.Employee;
 import co.id.mii.serverside.model.Role;
+import co.id.mii.serverside.model.User;
+import co.id.mii.serverside.model.dto.request.EmployeeRequest;
 import co.id.mii.serverside.repository.EmployeeRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,25 +42,30 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "employee not Found"));
     }
 
-    public Employee create(Employee employee) {
-        if (employee.getId() != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Employee already exist");
-        }
-        findByName(employee.getName());
-        employee.getUser().setEmployee(employee);
+    public Employee create(EmployeeRequest employeeRequest) {
+        Employee employee = new Employee();
+        employee.setEmail(employeeRequest.getEmail());
+        employee.setName(employeeRequest.getName());
+        employee.setNumber(employeeRequest.getNumber());
+
+        User user = new User();
+        user.setUsername(employeeRequest.getUsername());
+        user.setPassword(employeeRequest.getPassword());
 
         List<Role> role = new ArrayList();
-        role.add(roleService.getById(1L));
-        employee.getUser().setRoles(role);
+        role.add(roleService.getById(1L)); // Role User
+        user.setRoles(role);
+
+        employee.setUser(user);
+        user.setEmployee(employee);
+
         return employeeRepository.save(employee);
     }
 
     public Employee update(Long id, Employee employee) {
         Employee oldEmployee = getById(id);
-        if (!oldEmployee.getName().equals(employee.getName())) {
-            findByName(employee.getName());
-        }
         employee.setId(id);
+        employee.setUser(oldEmployee.getUser());
         return employeeRepository.save(employee);
     }
 

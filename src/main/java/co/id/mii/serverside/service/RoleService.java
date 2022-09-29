@@ -40,7 +40,6 @@ public class RoleService {
         if (role.getId() != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Role already exist");
         }
-        findByName(role.getName());
         return roleRepository.save(role);
     }
 
@@ -59,10 +58,8 @@ public class RoleService {
         return role;
     }
 
-    public void findByName(String name) {
-        if (roleRepository.findByName(name).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role already exists");
-        }
+    public Role findByName(String name) {
+        return roleRepository.findByName(name).get();
     }
 
 }

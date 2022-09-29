@@ -7,6 +7,8 @@ package co.id.mii.serverside.controller;
 
 import co.id.mii.serverside.model.Employee;
 import co.id.mii.serverside.model.User;
+import co.id.mii.serverside.model.dto.request.AddRoleUserRequest;
+import co.id.mii.serverside.model.dto.request.EmployeeRequest;
 import co.id.mii.serverside.service.EmployeeService;
 import co.id.mii.serverside.service.UserService;
 import java.util.List;
@@ -50,8 +52,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> create(@RequestBody EmployeeRequest employee) {
         return new ResponseEntity(EmployeeService.create(employee), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/addRole")
+    public ResponseEntity<Employee> AddRoles(@RequestBody AddRoleUserRequest addRoleUserRequest) {
+        return new ResponseEntity(userService.addRole(addRoleUserRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

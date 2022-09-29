@@ -6,6 +6,7 @@
 package co.id.mii.serverside.controller;
 
 import co.id.mii.serverside.model.Employee;
+import co.id.mii.serverside.model.dto.request.EmployeeRequest;
 import co.id.mii.serverside.service.EmployeeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
-        return new ResponseEntity(employeeService.create(employee), HttpStatus.CREATED);
+    public ResponseEntity<Employee> create(@RequestBody EmployeeRequest employeeRequest) {
+        return new ResponseEntity(employeeService.create(employeeRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
