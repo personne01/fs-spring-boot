@@ -64,5 +64,9 @@ public class CountryService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Country already exists");
         }
     }
+    
+    public List<Country> findByRegionId(Long id){
+        return countryRepository.findByRegionIdNative(id);
+    }
 
 }

@@ -40,6 +40,11 @@ public class CountryController {
         return new ResponseEntity(countryService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/regionId/{id}")
+    public ResponseEntity<List<Country>> findByRegionId(@PathVariable Long id) {
+        return new ResponseEntity(countryService.findByRegionId(id), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Country> getById(@PathVariable Long id) {
         return new ResponseEntity(countryService.getById(id), HttpStatus.OK);
