@@ -5,6 +5,7 @@
  */
 package co.id.mii.serverside.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,8 +34,8 @@ public class Employee {
     private String email;
 
     private int number;
-    
-    @OneToOne(mappedBy = "employee")
+
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
 
@@ -78,6 +79,14 @@ public class Employee {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

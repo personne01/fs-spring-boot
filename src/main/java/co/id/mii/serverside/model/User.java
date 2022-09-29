@@ -5,6 +5,7 @@
  */
 package co.id.mii.serverside.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ public class User {
     @Column(nullable = false)
     private String password;   
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
@@ -55,6 +57,14 @@ public class User {
         this.username = username;
         this.password = password;
         this.employee = employee;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {
